@@ -1,2 +1,2 @@
 # Bank web application
-Java Spring, postgresql
+Java Spring, MySQL
