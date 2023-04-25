@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Bank.</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel='stylesheet' th:href="@{/style.css}">
+  <link rel="icon" href="../static/images/kep.png">
+
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</head>
+<body>
+<section id="header">
+  <div class="header container">
+    <div class="nav-bar">
+      <div class="brand">
+        <a href="/">
+          <h1><span>Bank</span>.</h1>
+        </a>
+      </div>
+      <div class="nav-list">
+        <div class="hamburger">
+          <div class="bar"></div>
+        </div>
+        <ul class="nav">
+          <div class="underline">
+            <li><a href="/register" data-after="Projects">Regisztráció</a></li>
+            <li><a href="/login" data-after="Contact">Bejelentkezés</a></li>
+
+          </div>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <p th:text="${register_success}" class="edit_success"></p>
+</section>
+<div class="login-div">
+  <p class="login-title">Bejelentkezés</p>
+  <div th:if="${param.error}" class="fail_login">
+    Érvénytelen belépési adatok! Ellenőrizze a megadott emailt és az ügyfélazonosítót!
+  </div><br>
+  <form action="#" th:action="@{/login}" method="post" style="max-width: 400px; margin: 0 auto;" class="login-form">
+    <p>
+      E-mail cím: <input type="email" class="register-input" name="username"  required />
+    </p>
+    <p>
+      Jelszó: <input type="password" class="register-input" name="password"  required />
+    </p>
+    <p>
+      <input type="submit" value="Bejelentkezés" class="login-submit"/>
+    </p>
+    <p class="register-szoveg">Ha még nincs fiókod, regisztrálj <a href="/register" class="link">ITT!</a></p>
+  </form>
+</div>
+<div class="container2"></div>
+
+
+<section id="footer">
+  <div class="footer container">
+    <div class="brand">
+
+
+      <h1><span>Bank</span>.</h1>
+
+    </div>
+    <h2></h2>
+  </div>
+</section>
+<script src="../src/main/resources/app.js"></script>
+</body>
+
+
+</html>

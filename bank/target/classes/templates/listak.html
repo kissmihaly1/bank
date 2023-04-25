@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Bank.</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel='stylesheet' th:href="@{/style.css}">
+    <link rel="icon" href="../static/images/kep.png">
+
+    <script src="../static/validation.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</head>
+<body>
+<section id="header">
+    <div class="header container">
+        <div class="nav-bar">
+            <div class="brand">
+                <a href="/">
+                    <h1><span>Bank</span>.</h1>
+                </a>
+            </div>
+            <div class="nav-list">
+                <div class="hamburger">
+                    <div class="bar"></div>
+                </div>
+                <ul class="nav">
+                    <div class="underline">
+                        <li><a sec:authorize="hasAuthority('ROLE_ADMIN')" href="/bankinsert" data-after="Projects">Bank hozzáadás</a></li>
+                        <li><a sec:authorize="isAuthenticated" href="/feltoltes" data-after="Projects">Feltöltés</a></li>
+                        <li><a href="/bank" data-after="Projects">Számlám</a></li>
+                        <li><a sec:authorize="isAuthenticated" href="/utalas" data-after="Projects">Utalás</a></li>
+                        <li><a sec:authorize="isAuthenticated" th:href="@{/logout}">Kijelentkezés</a></li>
+
+
+                    </div>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="hero">
+
+
+    <div class="utalasok-div">
+        <p class="login-title2">Megszámolja, hogy hány utalás érkezett az admin fiókra, kecskemétről, fiókonként</p>
+        <table class="styled-table2" >
+            <tr class="active-row2">
+                <th class="profil-text2">Név: </th>
+                <th class="profil-text2">Város: </th>
+                <th class="profil-text2">Hányszor utalt: </th>
+
+            </tr>
+            <tr class="active-row2 masodiktr" th:each="lista1List, iter: ${lista1List}">
+                <td><span class="tab2"  th:text="${lista1List.nev}"></span></td>
+                <td><span class="tab2"  th:text="${lista1List.varos}"></span></td>
+                <td><span class="tab2"  th:text="${lista1List.osszeg}"></span></td>
+
+            </tr>
+        </table>
+    </div>
+    <div class="utalasok-div">
+        <p class="login-title2">Felhasználónként a legtöbb utalás összege.</p>
+        <table class="styled-table2" >
+            <tr class="active-row2">
+                <th class="profil-text2">Név</th>
+                <th class="profil-text2">Összeg</th>
+                <th class="profil-text2">Egyenleg</th>
+                <th class="profil-text2">Város</th>
+
+            </tr>
+            <tr class="active-row2 masodiktr" th:each="lista2List, iter: ${lista2List}">
+                <td><span class="tab2"  th:text="${lista2List.nev}"></span></td>
+                <td><span class="tab2" th:text="${lista2List.osszeg}"></span></td>
+                <td><span class="tab2"  th:text="${lista2List.egyenleg}"></span></td>
+                <td><span class="tab2"  th:text="${lista2List.varos}"></span></td>
+            </tr>
+        </table>
+    </div>
+    <div class="utalasok-div">
+        <p class="login-title2">Alkérdéses lekérdezés. Azok a felhasználók, akiknek nem utaltak még</p>
+        <table class="styled-table2" >
+            <tr class="active-row2">
+                <th class="profil-text2">Számlaszám</th>
+                <th class="profil-text2">Név</th>
+                <th class="profil-text2">E-mail cím</th>
+
+            </tr>
+            <tr class="active-row2 masodiktr" th:each="lista4List, iter: ${lista4List}">
+                <td><span class="tab2"  th:text="${lista4List.szamlaszam}"></span></td>
+                <td><span class="tab2"  th:text="${lista4List.nev}"></span></td>
+                <td><span class="tab2"  th:text="${lista4List.email}"></span></td>
+
+            </tr>
+        </table>
+    </div>
+    <div class="utalasok-div2">
+        <p class="login-title2">Felhasználók listázása</p>
+        <table class="styled-table2" >
+            <tr class="active-row2">
+                <th class="profil-text2">Név</th>
+                <th class="profil-text2">E-mail</th>
+                <th class="profil-text2">Egyenleg</th>
+                <th class="profil-text2">Számlaszám</th>
+                <th class="profil-text2">Telefonszám</th>
+                <th class="profil-text2">Város</th>
+                <th class="profil-text2">Utca</th>
+                <th class="profil-text2">Házszám</th>
+                <th class="profil-text2">Bankja neve</th>
+                <th class="profil-text2">Törlés</th>
+
+            </tr>
+            <tr class="active-row2 masodiktr" th:each="lista3List, iter: ${lista3List}">
+                <td><span class="tab2"  th:text="${lista3List.nev}"></span></td>
+                <td><span class="tab2" th:text="${lista3List.email}"></span></td>
+                <td><span class="tab2"  th:text="${lista3List.egyenleg}"></span></td>
+                <td><span class="tab2"  th:text="${lista3List.szamlaszam}"></span></td>
+                <td><span class="tab2"  th:text="${lista3List.telefonszam}"></span></td>
+                <td><span class="tab2"  th:text="${lista3List.varos}"></span></td>
+                <td><span class="tab2"  th:text="${lista3List.utca}"></span></td>
+                <td><span class="tab2"  th:text="${lista3List.hazszam}"></span></td>
+                <td><span class="tab2"  th:text="${lista3List.banknev}"></span></td>
+                <td>
+                    <form sec:authorize="hasAuthority('ROLE_ADMIN')" action="#" th:action="@{/lista3torles(id=${lista3List.ugyfelazonosito})}" method="post">
+                        <input type="hidden" name="ugyfelazonosito" id="ugyfelazonosito" class="termek-input" th:value="${lista3List.ugyfelazonosito}" readonly/>
+                        <input type="submit" value="Törlés" class="delete-btn2"/>
+                    </form>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+
+</section>
+<section id="footer">
+    <div class="footer container">
+        <div class="brand">
+
+
+            <h1><span>Bank</span>.</h1>
+
+        </div>
+        <h2></h2>
+    </div>
+</section>
+<script src="../src/main/resources/app.js"></script>
+</body>
+
+
+</html>

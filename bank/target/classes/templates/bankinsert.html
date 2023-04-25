@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Bank.</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel='stylesheet' th:href="@{/style.css}">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <link rel="icon" href="../static/images/kep.png">
+
+</head>
+<body>
+<section id="header">
+    <div class="header container">
+        <div class="nav-bar">
+            <div class="brand">
+                <a href="/">
+                    <h1><span>Bank</span>.</h1>
+                </a>
+            </div>
+            <div class="nav-list">
+                <div class="hamburger">
+                    <div class="bar"></div>
+                </div>
+                <ul class="nav">
+                    <div class="underline">
+                        <li><a sec:authorize="isAuthenticated" href="/utalasok" data-after="Projects">Számlatörténet</a></li>
+                        <li><a sec:authorize="hasAuthority('ROLE_ADMIN')" href="/bankinsert" data-after="Projects">Bank hozzáadás</a></li>
+                        <li><a href="/bank" data-after="Projects">Számlám</a></li>
+                        <li><a href="/utalas" data-after="Projects">Utalás</a></li>
+                        <li><a sec:authorize="isAuthenticated()" th:href="@{/logout}">Kijelentkezés</a></li>
+                    </div>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+<div sec:authorize="hasAuthority('ROLE_ADMIN')" class="utalasok-div">
+    <p class="login-title2">Bankok kezelése:</p>
+    <table class="styled-table2" >
+        <tr class="active-row2">
+            <th class="profil-text2">Bank neve</th>
+            <th class="profil-text2">Bank képe</th>
+            <th class="profil-text2">Bank ID</th>
+            <th class="profil-text2">Törlés</th>
+        </tr>
+        <tr class="active-row2 masodiktr" th:each="bank, iter: ${bankList}">
+            <td><span class="tab2" th:text="${bank.nev}"></span></td>
+            <td> <img alt="" class="bank-image" th:src="*{'data:image/jpeg;base64,'+{bank.image}}" /></td>
+            <td><span class="tab2" th:text="${bank.bank_id}"></span></td>
+            <td>
+                <form sec:authorize="hasAuthority('ROLE_ADMIN')" action="#" th:action="@{/banktorles(id=${bank.bank_id})}" method="post">
+                    <input type="hidden" name="bank_id" id="bank_id" class="termek-input" th:value="${bank.bank_id}" readonly/>
+                    <input type="submit" value="Törlés" class="delete-btn2"/>
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>
+<div class="register-div2">
+    <p class="register-title">Új bank adatai:</p>
+    <form action="#" th:action="@{/bankhozzadas}" method="post" enctype="multipart/form-data" class="register-form">
+        <p class="register-cim">Új bank neve:
+            <input class="register-input" type="text" name="nev" placeholder="XY Bank" id="nev" required>
+        </p>
+        <span th:text="${user_exists}"></span>
+        <p class="register-cim">Új bank képe:
+            <input class="register-input" type="file" name="image" placeholder="/images/unicredit.jpg" id="image" required>
+        </p>
+        <input type="submit" value="Regisztrálás" class="register-submit">
+    </form>
+</div>
+<div class="register-div10">
+    <p class="register-title">Bank módositás:</p>
+    <form action="#" th:action="@{/bankModosit}" method="post" enctype="multipart/form-data" class="register-form">
+        <p class="register-cim">Módosítandó bank ID-ja:
+            <input class="register-input" type="text" name="bank_id" placeholder="1" required>
+        </p>
+        <p class="register-cim">A bank új neve:
+            <input class="register-input" type="text" name="banknev" placeholder="XY Bank" required>
+        </p>
+        <span th:text="${user_exists}"></span>
+        <p class="register-cim">Új bank képe:
+            <input class="register-input" type="file" name="image" required>
+        </p>
+        <input type="submit" value="Módositás" class="register-submit">
+    </form>
+</div>
+
+
+
+
+
+<section id="footer">
+    <div class="footer container">
+        <div class="brand">
+
+
+            <h1><span>Bank</span>.</h1>
+
+        </div>
+        <h2></h2>
+    </div>
+</section>
+<script src="../src/main/resources/app.js"></script>
+</body>
+
+
+</html>

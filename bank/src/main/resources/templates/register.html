@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+   <head>
+      <title>Bank.</title>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <link rel='stylesheet' th:href="@{/style.css}">
+       <link rel="shortcut icon" type="image/png" th:href="@{../static/images/kep.png}"/>
+       <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>   
+   </head>
+   <body>
+   <section id="header">
+      <div class="header container">
+         <div class="nav-bar">
+            <div class="brand">
+               <a href="/">
+                  <h1><span>Bank</span>.</h1>
+               </a>
+            </div>
+            <div class="nav-list">
+               <div class="hamburger">
+                  <div class="bar"></div>
+               </div>
+               <ul class="nav">
+                  <div class="underline">
+                  <li><a href="/register" data-after="Projects">Regisztráció</a></li>
+                  <li><a href="/login" data-after="Contact">Bejelentkezés</a></li>
+                  </div>
+               </ul>
+            </div>
+         </div>
+      </div>
+   </section>
+   <div class="register-div">
+      <p class="register-title">Regisztrációs adatok</p>
+      <form action="#" th:action="@{/registerugyfel}" method="post" class="register-form" id="register">
+            <p class="register-cim">E-mail cím
+               <input class="register-input" type="email" name="email" id="email" th:value="${formSave[0]}" required>
+            </p>
+            <span th:text="${user_exists}"></span>
+            <p class="register-cim">Teljes név
+               <input class="register-input" type="text" name="nev" id="nev"  th:value="${formSave[1]}" required>
+            </p>
+          <p class="register-cim">Személyi igazolvány száma
+              <input class="register-input" type="text" name="szemelyi" id="szemelyi"  th:value="${formSave[2]}" required>
+          </p>
+          <p class="register-cim">Anyja születési neve
+              <input class="register-input" type="text" name="anyjaNeve" id="anyjaNeve"  th:value="${formSave[3]}" required>
+          </p>
+          <p class="register-cim">Telefonszám
+              <input class="register-input" type="text" name="telefonszam" id="telefonszam"  th:value="${formSave[4]}" required>
+          </p>
+            <p class="register-cim">Település
+               <input class="register-input" type="text" name="varos" id="varos" th:value="${formSave[5]}" required>
+            </p>
+            <p class="register-cim">Utca
+               <input class="register-input" type="text" name="utca" id="utca" th:value="${formSave[6]}" required>
+            </p>
+            <p class="register-cim">Házszám
+               <input class="register-input" type="number" min="1" name="hazszam" id="hazszam" th:value="${formSave[7]}" required>
+            </p>
+            <span th:text="${hazszam_error}"></span>
+            <p class="register-cim">Jelszó
+               <input class="register-input" type="password" name="password" id="password" th:value="${formSave[8]}" required>
+            </p>
+            <p class="register-cim">Melyik bankot választja?</p>
+          <!--  <label class="bankregister">
+              <input type="radio" class="bank-choose" name="banknev" th:each="bank, iter: ${bankList}" th:value="${bank.nev}" th:text="${bank.nev}" required>
+              <img alt="" class="bank-image" th:each="bank, iter: ${bankList}" th:src="*{'data:image/jpeg;base64,'+{bank.image}}" />
+            </label>-->
+                    <!-- table -->
+            <table class="styled-table2" >
+              <tr class="active-row2">
+              </tr>
+              <tr class="active-row2 masodiktr" th:each="bank, iter: ${bankList}">
+                  <td><label class="register-bank">
+                      <input type="radio" class="bank-choose" name="banknev" th:value="${bank.nev}" th:text="${bank.nev}" required>
+                  </label>
+                  </td>
+                  <td>
+                      <img alt="" class="bank-image"  th:src="*{'data:image/jpeg;base64,'+{bank.image}}" />
+                  </td>
+              </tr>
+            </table>
+
+          <span th:text="${jelszo_hossz_error}"></span><br><br>
+            <input type="submit" value="Regisztrálás" class="register-submit">
+         </form>
+      </div>
+   <section id="footer">
+      <div class="footer container">
+         <div class="brand">
+
+
+            <h1><span>Bank</span>.</h1>
+
+         </div>
+         <h2></h2>
+      </div>
+   </section>
+   <script src="../src/main/resources/app.js"></script>
+   </body>
+
+
+</html>
